@@ -231,7 +231,14 @@ function App() {
     <div className="presentation-shell">
       <div className="screen-frame">
         <header className="browser-chrome">
-          <div className="chrome-brand">{presentation.profile.name}</div>
+          <a
+            className="chrome-brand"
+            href="https://shmul.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {presentation.profile.name}
+          </a>
           <div className="chrome-meta">
             <div className="chrome-socials">
               <a

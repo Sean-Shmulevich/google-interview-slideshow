@@ -199,6 +199,7 @@ export const presentation = {
         },
         {
           name: 'Jagger Hershey',
+          href: 'https://www.linkedin.com/in/jaggerhershey/',
           role: 'Rust Game Development Project',
           quote:
             'Sean became one of the most impactful contributors on the team and took on some of the hardest technical challenges, including networking.',
