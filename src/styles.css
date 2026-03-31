@@ -393,6 +393,7 @@ button {
 }
 
 .gallery-viewport {
+  position: relative;
   display: grid;
   place-items: center;
   min-height: 600px;
@@ -407,6 +408,11 @@ button {
   max-height: 580px;
   display: block;
   object-fit: contain;
+  opacity: 0;
+}
+
+.gallery-image-visible {
+  opacity: 1;
 }
 
 .gallery-title-bar {
@@ -436,6 +442,11 @@ button {
   color: #22213f;
 }
 
+.gallery-controls button:disabled {
+  color: #7c7890;
+  background: #dcd9e8;
+}
+
 .gallery-caption {
   min-height: 28px;
   padding: 4px 10px;
@@ -447,6 +458,17 @@ button {
   font-family: 'Apple Garamond Bold', serif;
   font-size: 1rem;
   text-transform: capitalize;
+}
+
+.gallery-loading-state {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: 'Apple Garamond Bold', serif;
+  font-size: 1.35rem;
+  color: #4a4468;
+  background: rgba(244, 242, 250, 0.92);
 }
 
 .gallery-empty-state {
@@ -505,6 +527,10 @@ button {
 .section-intro {
   max-width: 760px;
   font-size: 1.02rem;
+}
+
+.section-intro-academic {
+  transform: translateX(2px);
 }
 
 .intro-window {
@@ -734,6 +760,10 @@ button {
     inset 2px 2px #808080;
 }
 
+.mobile-nav-button {
+  display: none;
+}
+
 .summary-grid,
 .recommendation-grid {
   display: grid;
@@ -825,6 +855,10 @@ button {
   font-family: 'Apple Garamond Bold', serif;
 }
 
+.metric-compact {
+  font-size: 2.16rem;
+}
+
 .metric-label {
   font-size: 0.92rem;
   font-weight: 700;
@@ -870,6 +904,10 @@ button {
 .inner-status-bar {
   display: flex;
   gap: 1px;
+  margin: 0 0 3px 3px;
+}
+
+.inner-status-bar-gallery {
   margin: 0 0 3px 3px;
 }
 
@@ -1035,16 +1073,19 @@ button {
   .workspace {
     grid-template-columns: 1fr;
     gap: 10px;
+    padding: 14px 10px 12px;
   }
 
   .desktop-rail {
-    width: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: none;
   }
 
   .slide-stage {
     padding: 12px 0 20px;
+  }
+
+  .slide-window {
+    width: min(100%, 96vw);
   }
 }
 
@@ -1063,14 +1104,6 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .desktop-rail {
-    gap: 10px;
-  }
-
-  .desktop-icon {
-    width: 110px;
-  }
-
   .taskbar {
     grid-template-columns: 1fr;
     padding: 10px;
@@ -1078,9 +1111,48 @@ button {
   }
 
   .taskbar-left,
-  .taskbar-center,
   .taskbar-right {
     justify-content: center;
+  }
+
+  .taskbar-center {
+    display: none;
+  }
+
+  .slide-stage {
+    position: relative;
+    padding: 8px 0 16px;
+  }
+
+  .mobile-nav-button {
+    position: fixed;
+    top: 50%;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 56px;
+    transform: translateY(-50%);
+    border: none;
+    background: rgba(216, 213, 236, 0.88);
+    box-shadow:
+      inset -1px -1px #0a0a0a,
+      inset 1px 1px #ffffff,
+      inset -2px -2px #808080,
+      inset 2px 2px #dfdfdf;
+    font-family: 'Apple Garamond Bold', serif;
+    font-size: 2rem;
+    line-height: 1;
+    color: #22213f;
+  }
+
+  .mobile-nav-left {
+    left: 6px;
+  }
+
+  .mobile-nav-right {
+    right: 6px;
   }
 }
 

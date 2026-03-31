@@ -15,27 +15,35 @@ const philosophyIcon =
   'https://win98icons.alexmeub.com/icons/png/users_green-4.png';
 const picturesIcon =
   'https://win98icons.alexmeub.com/icons/png/wia_img_color-0.png';
-const summaryIcon =
+const academicIcon =
   'https://win98icons.alexmeub.com/icons/png/winrep-1.png';
 const pictureModules = import.meta.glob(
   './assets/pictures/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}',
   { eager: true, import: 'default' }
 );
 
-const galleryImages = Object.entries(pictureModules)
-  .sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath))
-  .map(([path, src]) => ({
-    src,
-    name: formatPictureName(path),
-  }));
+const galleryImageNames = {
+  a: 'My family',
+  b: 'The sweetest dog in the world',
+  c: 'My favorite younger sister',
+  'c-2': '#love my terminal',
+  d: 'The Homies',
+  e: 'Our little mountain town',
+  f: 'Chefing it up',
+  g: 'Best present from my sister',
+  h: 'I have a great eye for grading cards',
+  i: 'Origami master',
+  j: 'I do be building keyboards',
+};
+
+const galleryImages = buildGalleryImages(pictureModules);
 
 const desktopIcons = [
   { label: 'Overview', icon: overviewIcon },
-  { label: 'Executive Summary', icon: summaryIcon },
   { label: 'Four Principles', icon: codeIcon },
   { label: 'Philosophy', icon: philosophyIcon },
+  { label: 'Academic Recommendations', icon: academicIcon },
   { label: 'Peer Recommendations', icon: peerIcon },
-  { label: 'Academic Recommendations', icon: peerIcon },
 ];
 
 function App() {
@@ -44,6 +52,8 @@ function App() {
   const [navPulse, setNavPulse] = useState(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryImageLoaded, setGalleryImageLoaded] = useState(false);
+  const [showGalleryLoadingState, setShowGalleryLoadingState] = useState(false);
   const [galleryPosition, setGalleryPosition] = useState(null);
   const [galleryDrag, setGalleryDrag] = useState(null);
   const slideStageRef = useRef(null);
@@ -58,16 +68,18 @@ function App() {
 
   function goToPrevious() {
     setNavPulse('left');
-    setActiveIndex((current) => Math.max(current - 1, 0));
+    setActiveIndex((current) => (current === 0 ? totalSlides - 1 : current - 1));
   }
 
   function goToNext() {
     setNavPulse('right');
-    setActiveIndex((current) => Math.min(current + 1, totalSlides - 1));
+    setActiveIndex((current) => (current === totalSlides - 1 ? 0 : current + 1));
   }
 
   function openGallery() {
     setGalleryIndex(0);
+    setGalleryImageLoaded(false);
+    setShowGalleryLoadingState(false);
     if (!galleryPosition && slideStageRef.current) {
       const stageRect = slideStageRef.current.getBoundingClientRect();
       setGalleryPosition({
@@ -81,20 +93,27 @@ function App() {
   function closeGallery() {
     setGalleryOpen(false);
     setGalleryDrag(null);
+    setShowGalleryLoadingState(false);
   }
 
   function goToPreviousImage() {
+    if (!galleryImageLoaded) return;
     setGalleryIndex((current) => {
       if (galleryImages.length === 0) return current;
       return (current - 1 + galleryImages.length) % galleryImages.length;
     });
+    setGalleryImageLoaded(false);
+    setShowGalleryLoadingState(false);
   }
 
   function goToNextImage() {
+    if (!galleryImageLoaded) return;
     setGalleryIndex((current) => {
       if (galleryImages.length === 0) return current;
       return (current + 1) % galleryImages.length;
     });
+    setGalleryImageLoaded(false);
+    setShowGalleryLoadingState(false);
   }
 
   function beginGalleryDrag(event) {
@@ -195,6 +214,19 @@ function App() {
     };
   }, [galleryDrag]);
 
+  useEffect(() => {
+    if (!galleryOpen || galleryImageLoaded) {
+      setShowGalleryLoadingState(false);
+      return undefined;
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setShowGalleryLoadingState(true);
+    }, 140);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [galleryImageLoaded, galleryIndex, galleryOpen]);
+
   return (
     <div className="presentation-shell">
       <div className="screen-frame">
@@ -268,6 +300,24 @@ function App() {
           </aside>
 
           <main className="slide-stage" ref={slideStageRef}>
+            <button
+              aria-label="Previous slide"
+              className={`mobile-nav-button mobile-nav-left ${navPulse === 'left' ? 'nav-button-active' : ''}`}
+              onClick={goToPrevious}
+              type="button"
+            >
+              ‹
+            </button>
+
+            <button
+              aria-label="Next slide"
+              className={`mobile-nav-button mobile-nav-right ${navPulse === 'right' ? 'nav-button-active' : ''}`}
+              onClick={goToNext}
+              type="button"
+            >
+              ›
+            </button>
+
             <div className={`window-frame slide-window ${navPulse ? 'slide-window-animate' : ''}`}>
               <div className="title-bar">
                 <div className="title-bar-text">
@@ -328,21 +378,32 @@ function App() {
                   {activeGalleryImage ? (
                     <>
                       <div className="gallery-viewport">
+                        {!galleryImageLoaded && showGalleryLoadingState ? (
+                          <div className="gallery-loading-state">Loading image...</div>
+                        ) : null}
                         <img
-                          className="gallery-image"
+                          className={`gallery-image ${galleryImageLoaded ? 'gallery-image-visible' : ''}`}
                           src={activeGalleryImage.src}
                           alt={activeGalleryImage.name}
+                          onLoad={() => {
+                            setGalleryImageLoaded(true);
+                            setShowGalleryLoadingState(false);
+                          }}
                         />
                       </div>
 
                       <div className="gallery-controls">
-                        <button onClick={goToPreviousImage} type="button">
+                        <button
+                          onClick={goToPreviousImage}
+                          type="button"
+                          disabled={!galleryImageLoaded}
+                        >
                           Prev
                         </button>
                         <span className="gallery-caption">
                           {activeGalleryImage.name} | {galleryIndex + 1}/{galleryImages.length}
                         </span>
-                        <button onClick={goToNextImage} type="button">
+                        <button onClick={goToNextImage} type="button" disabled={!galleryImageLoaded}>
                           Next
                         </button>
                       </div>
@@ -353,6 +414,12 @@ function App() {
                       <p>Drop image files into `src/assets/pictures` to populate this window.</p>
                     </div>
                   )}
+                </div>
+
+                <div className="inner-status-bar inner-status-bar-gallery">
+                  <span className="status-bar-field">
+                    {activeGalleryImage ? activeGalleryImage.name : 'Pictures'}
+                  </span>
                 </div>
               </div>
             ) : null}
@@ -424,6 +491,26 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function buildGalleryImages(modules) {
+  const duplicateCounts = new Map();
+
+  return Object.entries(modules)
+    .sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath))
+    .map(([path, src]) => {
+      const fileName = path.split('/').pop() ?? path;
+      const baseName = fileName.replace(/\.[^.]+$/, '').toLowerCase();
+      const duplicateCount = (duplicateCounts.get(baseName) ?? 0) + 1;
+      duplicateCounts.set(baseName, duplicateCount);
+
+      const lookupKey = duplicateCount > 1 ? `${baseName}-${duplicateCount}` : baseName;
+
+      return {
+        src,
+        name: galleryImageNames[lookupKey] ?? formatPictureName(path),
+      };
+    });
+}
+
 function SlideContent({ slide, profile, slideNumber }) {
   if (slide.variant === 'intro') {
     return <IntroSlide profile={profile} title={slide.title} />;
@@ -456,7 +543,11 @@ function SlideContent({ slide, profile, slideNumber }) {
         <div className="principle-grid">
           {slide.principles.map((principle) => (
             <article key={principle.title} className="principle-card">
-              <p className="metric">{principle.metric}</p>
+              <p
+                className={`metric ${principle.title === 'Communication & Collaboration' ? 'metric-compact' : ''}`}
+              >
+                {principle.metric}
+              </p>
               <h2>{principle.title}</h2>
               <p className="metric-label">{principle.label}</p>
               <p>{principle.body}</p>
@@ -494,7 +585,13 @@ function SlideContent({ slide, profile, slideNumber }) {
       <div className="section-heading">
         <p className="eyebrow">Slide {slideNumber}</p>
         <h1>{slide.title}</h1>
-        {slide.intro ? <p className="section-intro">{slide.intro}</p> : null}
+        {slide.intro ? (
+          <p
+            className={`section-intro ${slide.id === 'academic-recommendations' ? 'section-intro-academic' : ''}`}
+          >
+            {slide.intro}
+          </p>
+        ) : null}
       </div>
 
       <div className="recommendation-grid">

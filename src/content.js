@@ -1,12 +1,12 @@
 export const presentation = {
   profile: {
     name: 'Sean Shmulevich',
-    role: 'New Grad Software Engineer, Google',
-    location: 'Currently based in Zurich, US citizen',
+    role: 'New Grad Software Engineer Candidate',
+    location: 'Pittsburgh, PA',
     school: 'B.S. in Computer Science: University of Pittsburgh',
     focus: 'Systems-minded engineer with a focus on infrastructure, tooling, and full-stack product work',
     thesis:
-      'I care about understanding systems deeply, executing with high ownership, and building tools that help people get organized, move quicker and do more.',
+      'I care about understanding systems deeply, taking real ownership, and building tools that help people get organized, move faster, and do more.',
     skillGroups: [
       {
         title: 'Frontend & Product',
@@ -75,25 +75,6 @@ export const presentation = {
       variant: 'intro',
     },
     {
-      id: 'summary',
-      desktopLabel: 'Executive Summary',
-      title: 'Executive Summary',
-      windowTitle: 'Executive Summary',
-      variant: 'summary',
-      whySean: [
-        'I push into difficult technical concepts to build lasting foundations, with particular depth in programming languages, concurrency, and low-level debugging.',
-        'Has shipped real software end to end: paid client work, infrastructure, auth, caching, deployment, and production fixes.',
-        'I bring a strong point of view on tools, workflow, and complexity management.',
-        'I care about software quality in both senses: correctness under the hood and a product experience that genuinely helps people.',
-      ],
-      whyGoogle: [
-        'Google is where engineering rigor, scale, and product quality all matter at the same time.',
-        'The work spans the kinds of problems I care about most: infrastructure, developer systems, workflows, and products used by real people every day.',
-        'YouTube has been a guiding force in my life. Seeing what people create there has pushed me toward new interests, helped me explore existing ones more deeply, and constantly reminded me how empowering software can be at community scale.',
-        'Google is one of the few places where building better systems can also help millions of people get organized and do more.',
-      ],
-    },
-    {
       id: 'principles',
       desktopLabel: 'Four Principles',
       title: 'The Four Principles of Sean',
@@ -110,7 +91,7 @@ export const presentation = {
         {
           title: 'Communication & Collaboration',
           metric: 'Strong ideas get stronger together',
-          label: 'Ideas get stronger when they are shared and challenged',
+          label: 'Collaborative thinking',
           body:
             'I think ideas get uplifted when you can work closely with smart people, bounce things back and forth, and refine them together in real time. I value strong in-person collaboration a lot.',
         },
@@ -164,6 +145,40 @@ export const presentation = {
       ],
     },
     {
+      id: 'academic-recommendations',
+      desktopLabel: 'Academic Recommendations',
+      title: 'Recommendations from Faculty',
+      windowTitle: 'faculty_feedback.sys',
+      variant: 'recommendations',
+      intro: 'Faculty who challenged me and believe in me',
+      recommendations: [
+        {
+          name: 'Luis Oliveira',
+          href: 'https://www.cs.pitt.edu/people/full-time-faculty/luis-oliveira',
+          role: 'Systems Programming Professor',
+          quote:
+            'I supervised Sean during his capstone project, where he was a standout contributor on the team.',
+          bullets: [
+            'Consistently took ownership of complex parts of the system',
+            'Wrote a significant portion of the codebase with strong technical judgment',
+            'Was reliable, collaborative, and elevated the overall quality of the project',
+          ],
+        },
+        {
+          name: 'Wonsun Ahn',
+          href: 'https://www.linkedin.com/in/wonsun-ahn-33369a5/',
+          role: 'Compilers Professor',
+          quote:
+            'Sean stood out for both technical ability and for how seriously he approaches programming as a discipline.',
+          bullets: [
+            'Engaged deeply with material and asked thoughtful questions',
+            'Showed strong drive to understand systems at a fundamental level',
+            'Brings both skill and intentionality to his work',
+          ],
+        },
+      ],
+    },
+    {
       id: 'peer-recommendations',
       desktopLabel: 'Peer Recommendations',
       title: 'Recommendations from Teammates',
@@ -191,41 +206,6 @@ export const presentation = {
             'Learned Rust quickly despite the language’s steep learning curve',
             'Delivered a significant portion of implementation work',
             'Helped guide and manage the group throughout the project',
-          ],
-        },
-      ],
-    },
-    {
-      id: 'academic-recommendations',
-      desktopLabel: 'Academic Recommendations',
-      title: 'Recommendations from Faculty',
-      windowTitle: 'faculty_feedback.sys',
-      variant: 'recommendations',
-      intro:
-        'Faculty feedback reinforces what shows up in my project work too: I go deeper than required, care about fundamentals, and approach programming seriously.',
-      recommendations: [
-        {
-          name: 'Luis Oliveira',
-          href: 'https://www.cs.pitt.edu/people/full-time-faculty/luis-oliveira',
-          role: 'Capstone Project Supervisor',
-          quote:
-            'I supervised Sean during his capstone project, where he was a standout contributor on the team.',
-          bullets: [
-            'Consistently took ownership of complex parts of the system',
-            'Wrote a significant portion of the codebase with strong technical judgment',
-            'Was reliable, collaborative, and elevated the overall quality of the project',
-          ],
-        },
-        {
-          name: 'Wonsun Ahn',
-          href: 'https://www.linkedin.com/in/wonsun-ahn-33369a5/',
-          role: 'Compilers Professor',
-          quote:
-            'Sean stood out for both technical ability and for how seriously he approaches programming as a discipline.',
-          bullets: [
-            'Engaged deeply with material and asked thoughtful questions',
-            'Showed strong drive to understand systems at a fundamental level',
-            'Brings both skill and intentionality to his work',
           ],
         },
       ],
