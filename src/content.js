@@ -140,7 +140,7 @@ export const presentation = {
           title: 'Software Should Empower',
           line: 'Good tools should adapt to the user, not the other way around.',
           body:
-            'I care about building software that helps people get organized, move quicker, do more, and learn more, not software that distracts or manipulates them.',
+            'I care about building software that helps people find what they need, get organized, move faster, and do more. That focus on making information accessible and useful is a big part of why Google appeals to me.',
         },
       ],
     },
