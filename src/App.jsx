@@ -23,6 +23,18 @@ const pictureModules = import.meta.glob(
 );
 
 const galleryImageNames = {
+  'a.png': 'My family',
+  'b.jpg': 'The sweetest dog in the world',
+  'c.jpg': 'My favorite younger sister',
+  'd-me-ski.jpg': 'Me doing tricks',
+  'c.png': '#love my terminal',
+  'd.jpg': 'The Homies',
+  'e.jpg': 'Our little mountain town',
+  'f.jpg': 'Chefing it up',
+  'g.jpg': 'Best present from my sister',
+  'h.jpg': 'I have a great eye for grading cards',
+  'i.jpg': 'Origami master',
+  'j.jpg': 'I do be building keyboards',
   a: 'My family',
   b: 'The sweetest dog in the world',
   c: 'My favorite younger sister',
@@ -34,6 +46,21 @@ const galleryImageNames = {
   h: 'I have a great eye for grading cards',
   i: 'Origami master',
   j: 'I do be building keyboards',
+};
+
+const galleryImageOrder = {
+  'a.png': 1,
+  'b.jpg': 2,
+  'c.jpg': 3,
+  'd-me-ski.jpg': 4,
+  'c.png': 5,
+  'd.jpg': 6,
+  'e.jpg': 7,
+  'f.jpg': 8,
+  'g.jpg': 9,
+  'h.jpg': 10,
+  'i.jpg': 11,
+  'j.jpg': 12,
 };
 
 const galleryImages = buildGalleryImages(pictureModules);
@@ -49,6 +76,7 @@ const desktopIcons = [
 function App() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [clock, setClock] = useState(() => formatTime(new Date()));
+  const [currentDate, setCurrentDate] = useState(() => formatDate(new Date()));
   const [navPulse, setNavPulse] = useState(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryIndex, setGalleryIndex] = useState(0);
@@ -168,7 +196,9 @@ function App() {
 
   useEffect(() => {
     const intervalId = window.setInterval(() => {
-      setClock(formatTime(new Date()));
+      const now = new Date();
+      setClock(formatTime(now));
+      setCurrentDate(formatDate(now));
     }, 1000);
 
     return () => window.clearInterval(intervalId);
@@ -273,7 +303,7 @@ function App() {
                 <img src={xIcon} alt="X" />
               </a>
             </div>
-            <span className="chrome-meta-pill chrome-date">Tue Mar 31</span>
+            <span className="chrome-meta-pill chrome-date">{currentDate}</span>
           </div>
         </header>
 
@@ -488,6 +518,14 @@ function formatTime(date) {
   });
 }
 
+function formatDate(date) {
+  return date.toLocaleDateString([], {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
 function formatPictureName(path) {
   const fileName = path.split('/').pop() ?? path;
   const baseName = fileName.replace(/\.[^.]+$/, '');
@@ -502,7 +540,16 @@ function buildGalleryImages(modules) {
   const duplicateCounts = new Map();
 
   return Object.entries(modules)
-    .sort(([leftPath], [rightPath]) => leftPath.localeCompare(rightPath))
+    .sort(([leftPath], [rightPath]) => {
+      const leftFileName = leftPath.split('/').pop() ?? leftPath;
+      const rightFileName = rightPath.split('/').pop() ?? rightPath;
+      const leftRank = galleryImageOrder[leftFileName] ?? Number.MAX_SAFE_INTEGER;
+      const rightRank = galleryImageOrder[rightFileName] ?? Number.MAX_SAFE_INTEGER;
+
+      if (leftRank !== rightRank) return leftRank - rightRank;
+
+      return leftPath.localeCompare(rightPath);
+    })
     .map(([path, src]) => {
       const fileName = path.split('/').pop() ?? path;
       const baseName = fileName.replace(/\.[^.]+$/, '').toLowerCase();
@@ -513,7 +560,10 @@ function buildGalleryImages(modules) {
 
       return {
         src,
-        name: galleryImageNames[lookupKey] ?? formatPictureName(path),
+        name:
+          galleryImageNames[fileName.toLowerCase()] ??
+          galleryImageNames[lookupKey] ??
+          formatPictureName(path),
       };
     });
 }
