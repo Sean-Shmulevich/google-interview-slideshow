@@ -2,7 +2,7 @@ export const presentation = {
   profile: {
     name: 'Sean Shmulevich',
     role: 'New Grad Software Engineer, Google',
-    location: 'Digital Nomad currently based in Zurich',
+    location: 'Currently based in Zurich, US citizen',
     school: 'B.S. in Computer Science: University of Pittsburgh',
     focus: 'Systems-minded engineer with a focus on infrastructure, tooling, and full-stack product work',
     thesis:

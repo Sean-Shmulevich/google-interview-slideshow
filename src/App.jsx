@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { presentation } from './content';
-import portrait from './assets/sean_ghibli.png';
+import portrait from './assets/me.webp';
 import cloudsBackground from './assets/clouds-bg.jpg';
 import mountainWallpaper from './assets/swissMountains.webp';
 import pittMark from './assets/pitt-mark.png';
@@ -10,7 +10,7 @@ import xIcon from './assets/x_pixel_logo.png';
 import overviewIcon from './assets/myIcon_1.png';
 import folderIcon from './assets/aim_fldr.ico';
 import codeIcon from './assets/vb-bas.ico';
-import peerIcon from './assets/aimblt2.ico';
+import peerIcon from './assets/aimblt2-1.png';
 const philosophyIcon =
   'https://win98icons.alexmeub.com/icons/png/users_green-4.png';
 const picturesIcon =
