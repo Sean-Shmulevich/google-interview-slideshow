@@ -205,15 +205,15 @@ export const presentation = {
         'Faculty feedback reinforces what shows up in my project work too: I go deeper than required, care about fundamentals, and approach programming seriously.',
       recommendations: [
         {
-          name: 'Derrick Hicks',
-          href: 'https://www.linkedin.com/in/derrick-hicks123/',
-          role: 'Teaching Assistant, Operating Systems',
+          name: 'Luis Oliveira',
+          href: 'https://www.cs.pitt.edu/people/full-time-faculty/luis-oliveira',
+          role: 'Capstone Project Supervisor',
           quote:
-            'Sean consistently went beyond the requirements on projects and explored advanced concepts with real depth.',
+            'I supervised Sean during his capstone project, where he was a standout contributor on the team.',
           bullets: [
-            'Extended Peterson’s solution to n processes',
-            'Implemented K-means-based memory eviction ideas',
-            'Brought thoughtful, technically strong effort to systems work',
+            'Consistently took ownership of complex parts of the system',
+            'Wrote a significant portion of the codebase with strong technical judgment',
+            'Was reliable, collaborative, and elevated the overall quality of the project',
           ],
         },
         {

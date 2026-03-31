@@ -15,6 +15,8 @@ const philosophyIcon =
   'https://win98icons.alexmeub.com/icons/png/users_green-4.png';
 const picturesIcon =
   'https://win98icons.alexmeub.com/icons/png/wia_img_color-0.png';
+const summaryIcon =
+  'https://win98icons.alexmeub.com/icons/png/winrep-1.png';
 const pictureModules = import.meta.glob(
   './assets/pictures/*.{png,jpg,jpeg,webp,gif,PNG,JPG,JPEG,WEBP,GIF}',
   { eager: true, import: 'default' }
@@ -29,7 +31,7 @@ const galleryImages = Object.entries(pictureModules)
 
 const desktopIcons = [
   { label: 'Overview', icon: overviewIcon },
-  { label: 'Executive Summary', icon: folderIcon },
+  { label: 'Executive Summary', icon: summaryIcon },
   { label: 'Four Principles', icon: codeIcon },
   { label: 'Philosophy', icon: philosophyIcon },
   { label: 'Peer Recommendations', icon: peerIcon },
